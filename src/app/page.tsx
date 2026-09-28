@@ -1,3 +1,13 @@
+import Faq from "../components/sections/Faq";
+import Flow from "../components/sections/Flow";
+import Menu from "../components/sections/Menu";
+import Reservation from "../components/sections/Reservation";
+import ShopInfo from "../components/sections/ShopInfo";
+import Staff from "../components/sections/Staff";
+import Strengths from "../components/sections/Strengths";
+import Voices from "../components/sections/Voices";
+import Worries from "../components/sections/Worries";
+
 export default function Home() {
   return (
     <div className="min-h-svh bg-[#f8f6f0] font-sans text-[#30372f]">
@@ -13,8 +23,9 @@ export default function Home() {
         </div>
       </header>
 
-      <main id="top" className="mx-auto grid min-h-[calc(100svh-76px)] max-w-[1440px] grid-cols-1 items-center gap-9 px-6 pb-10 sm:px-10 lg:min-h-[calc(100svh-92px)] lg:grid-cols-[0.88fr_1.12fr] lg:gap-14 lg:px-16 lg:pb-14">
-        <section className="relative z-10 flex flex-col items-start pt-7 sm:pt-10 lg:py-16">
+      <main>
+        <section id="top" className="mx-auto grid min-h-[calc(100svh-76px)] max-w-[1440px] grid-cols-1 items-center gap-9 px-6 pb-10 sm:px-10 lg:min-h-[calc(100svh-92px)] lg:grid-cols-[0.88fr_1.12fr] lg:gap-14 lg:px-16 lg:pb-14">
+          <div className="relative z-10 flex flex-col items-start pt-7 sm:pt-10 lg:py-16">
           <p className="mb-7 flex items-center gap-3 text-[13px] font-medium tracking-[0.08em] text-[#6f5b45] sm:mb-9">
             <span className="h-px w-8 bg-[#b89d76]" />
             髪質改善トリートメント | 渋谷店
@@ -33,16 +44,31 @@ export default function Home() {
             <span>この店舗で予約する</span>
             <span aria-hidden="true" className="text-lg leading-none">↗</span>
           </a>
+          </div>
+
+          <div
+            role="img"
+            aria-label="やわらかな光をイメージした写真の仮スペース"
+            className="relative mx-auto aspect-[1.18/1] w-full max-w-[620px] overflow-hidden bg-[radial-gradient(ellipse_at_70%_24%,rgba(255,255,255,0.94)_0%,rgba(255,255,255,0)_31%),radial-gradient(ellipse_at_27%_70%,rgba(194,173,141,0.42)_0%,rgba(194,173,141,0)_42%),linear-gradient(135deg,#e9e3d7_0%,#d9d0c1_42%,#c9c5b5_100%)] sm:aspect-[1.22/1] lg:aspect-square lg:max-w-none"
+          >
+            <div className="absolute inset-[5%] border border-white/50" />
+          </div>
         </section>
 
-        <div
-          role="img"
-          aria-label="やわらかな光をイメージした写真の仮スペース"
-          className="relative mx-auto aspect-[1.18/1] w-full max-w-[620px] overflow-hidden bg-[radial-gradient(ellipse_at_70%_24%,rgba(255,255,255,0.94)_0%,rgba(255,255,255,0)_31%),radial-gradient(ellipse_at_27%_70%,rgba(194,173,141,0.42)_0%,rgba(194,173,141,0)_42%),linear-gradient(135deg,#e9e3d7_0%,#d9d0c1_42%,#c9c5b5_100%)] sm:aspect-[1.22/1] lg:aspect-square lg:max-w-none"
-        >
-          <div className="absolute inset-[5%] border border-white/50" />
-        </div>
+        <Worries />
+        <Strengths />
+        <Menu />
+        <Flow />
+        <Staff />
+        <Voices />
+        <Faq />
+        <ShopInfo />
+        <Reservation />
       </main>
+
+      <footer className="border-t border-[#e1dccc] px-6 py-6 text-center text-[11px] tracking-[0.04em] text-[#77786b]">
+        ※ Lueur はデモ用の架空の美容室です
+      </footer>
     </div>
   );
 }
