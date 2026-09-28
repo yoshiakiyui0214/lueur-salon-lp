@@ -1,4 +1,4 @@
-import { ReservationLink, SectionHeading } from "./SectionParts";
+import { SectionHeading } from "./SectionParts";
 
 const voices = [
   {
@@ -41,7 +41,6 @@ export default function Voices() {
           ))}
         </ul>
         <p className="mt-6 text-[11px] text-[#77786b]">※デモ用の架空の内容です</p>
-        <ReservationLink />
       </div>
     </section>
   );

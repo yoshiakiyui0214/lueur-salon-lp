@@ -3,11 +3,12 @@ type SectionHeadingProps = {
   title: string;
   description?: string;
   titleId: string;
+  className?: string;
 };
 
-export function SectionHeading({ eyebrow, title, description, titleId }: SectionHeadingProps) {
+export function SectionHeading({ eyebrow, title, description, titleId, className = "" }: SectionHeadingProps) {
   return (
-    <div className="mb-9 max-w-2xl sm:mb-12">
+    <div className={`mb-9 max-w-2xl sm:mb-12 ${className}`}>
       <p className="mb-3 text-[12px] font-medium tracking-[0.12em] text-[#8B6F55]">{eyebrow}</p>
       <h2 id={titleId} className="font-serif text-[26px] font-normal leading-[1.55] text-[#394338] sm:text-[32px]">
         {title}

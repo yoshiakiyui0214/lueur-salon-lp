@@ -1,4 +1,4 @@
-import { ReservationLink, SectionHeading } from "./SectionParts";
+import { SectionHeading } from "./SectionParts";
 
 const staff = [
   {
@@ -45,7 +45,6 @@ export default function Staff() {
           ))}
         </ul>
         <p className="mt-6 text-[11px] text-[#77786b]">※スタッフはデモ用の架空の設定です</p>
-        <ReservationLink />
       </div>
     </section>
   );

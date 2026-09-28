@@ -1,4 +1,4 @@
-import { ReservationLink, SectionHeading } from "./SectionParts";
+import { SectionHeading } from "./SectionParts";
 
 const worries = [
   "朝は時間がなくて、髪の手入れまで手が回らない",
@@ -25,7 +25,6 @@ export default function Worries() {
             </li>
           ))}
         </ul>
-        <ReservationLink />
       </div>
     </section>
   );

@@ -10,10 +10,10 @@ const menus = [
 export default function Menu() {
   return (
     <section aria-labelledby="menu-title" className="bg-[#f8f6f0] px-6 py-16 sm:px-10 sm:py-20 lg:px-16">
-      <div className="mx-auto max-w-4xl">
+      <div className="mx-auto max-w-6xl">
         <SectionHeading
           eyebrow="04 メニュー・料金"
-          title="わかりやすい、税込表示"
+          title="メニュー・料金"
           description="髪の状態やご希望に合わせて、メニューをお選びいただけます。"
           titleId="menu-title"
         />

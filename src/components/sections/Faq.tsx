@@ -1,4 +1,4 @@
-import { ReservationLink, SectionHeading } from "./SectionParts";
+import { SectionHeading } from "./SectionParts";
 
 const questions = [
   {
@@ -22,7 +22,7 @@ const questions = [
 export default function Faq() {
   return (
     <section aria-labelledby="faq-title" className="bg-[#f8f6f0] px-6 py-16 sm:px-10 sm:py-20 lg:px-16">
-      <div className="mx-auto max-w-4xl">
+      <div className="mx-auto max-w-6xl">
         <SectionHeading
           eyebrow="08 よくある質問"
           title="ご予約前によくいただくご質問"
@@ -39,7 +39,6 @@ export default function Faq() {
             </details>
           ))}
         </div>
-        <ReservationLink />
       </div>
     </section>
   );

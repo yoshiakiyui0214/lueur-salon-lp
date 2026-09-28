@@ -30,10 +30,17 @@ export default function Strengths() {
         />
         <ol className="grid gap-8 md:grid-cols-3 md:gap-9">
           {strengths.map((strength) => (
-            <li key={strength.number} className="border-t border-[#cfc6b5] pt-5">
+            <li key={strength.number}>
+              <div
+                role="img"
+                aria-label={`${strength.title}の写真の仮スペース`}
+                className="mb-5 aspect-[16/10] w-full bg-[radial-gradient(ellipse_at_70%_24%,rgba(255,255,255,0.94)_0%,rgba(255,255,255,0)_31%),radial-gradient(ellipse_at_27%_70%,rgba(194,173,141,0.42)_0%,rgba(194,173,141,0)_42%),linear-gradient(135deg,#e9e3d7_0%,#d9d0c1_42%,#c9c5b5_100%)]"
+              />
+              <div className="border-t border-[#cfc6b5] pt-5">
               <span className="font-serif text-sm text-[#8B6F55]">{strength.number}</span>
               <h3 className="mt-4 text-[17px] font-medium leading-7 text-[#394338]">{strength.title}</h3>
               <p className="mt-3 text-[14px] leading-7 text-[#686b60]">{strength.description}</p>
+              </div>
             </li>
           ))}
         </ol>
