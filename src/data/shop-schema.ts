@@ -19,6 +19,7 @@ export const CustomerVoiceSchema = z.strictObject({
 
 export const ShopSchema = z.strictObject({
   slug: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/),
+  sortOrder: z.number().int().nonnegative().default(100),
   name: text,
   subcopy: text,
   introduction: text,
@@ -26,7 +27,10 @@ export const ShopSchema = z.strictObject({
   closedDay: text,
   stationAccess: text,
   accessDescription: text,
-  address: text,
+  address: z.string().trim().min(1).refine(
+    (value) => value.endsWith("(デモ用の架空住所)"),
+    "住所は末尾に (デモ用の架空住所) を付けてください",
+  ),
   staff: z.tuple([StaffMemberSchema, StaffMemberSchema]),
   voices: z.tuple([CustomerVoiceSchema, CustomerVoiceSchema, CustomerVoiceSchema]),
   mapLabel: text,
@@ -39,10 +43,7 @@ export const GeneratedShopContentSchema = z.strictObject({
   subcopy: text,
   introduction: text,
   accessDescription: text,
-  address: z.string().trim().min(1).refine(
-    (value) => value.endsWith("(デモ用の架空住所)"),
-    "住所は末尾に (デモ用の架空住所) を付けてください",
-  ),
+  address: text,
   staff: z.tuple([StaffMemberSchema, StaffMemberSchema]),
   voices: z.tuple([CustomerVoiceSchema, CustomerVoiceSchema, CustomerVoiceSchema]),
   mapLabel: text,

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import ShopLanding from "@/components/ShopLanding";
-import { getShopBySlug, shops } from "@/data/shops";
+import { getShopBySlug, getShops } from "@/data/shops";
 
 type ShopPageProps = {
   params: Promise<{ shop: string }>;
@@ -10,7 +10,7 @@ type ShopPageProps = {
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return shops.map(({ slug }) => ({ shop: slug }));
+  return getShops().map(({ slug }) => ({ shop: slug }));
 }
 
 export async function generateMetadata({ params }: ShopPageProps): Promise<Metadata> {

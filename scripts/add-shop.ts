@@ -7,7 +7,7 @@ import {
   GeneratedShopContentSchema,
   ShopSchema,
 } from "../src/data/shop-schema";
-import { shops } from "../src/data/shops";
+import { getShops } from "../src/data/shops";
 
 type ShopInputs = {
   slug: string;
@@ -91,9 +91,17 @@ function findBannedTerms(value: unknown, currentPath = "$", matches: string[] = 
   return matches;
 }
 
+function addDemoAddressNote(address: string): string {
+  const cleanAddress = address
+    .replace(/[（(][^）)]*デモ用の架空住所[^）)]*[）)]/g, "")
+    .trim();
+
+  return `${cleanAddress} (デモ用の架空住所)`;
+}
+
 function getExistingShopExamples(): string {
   return JSON.stringify(
-    shops.map(({ slug, name, subcopy, introduction, accessDescription, address, staff, voices, mapLabel, title, description }) => ({
+    getShops().map(({ slug, name, subcopy, introduction, accessDescription, address, staff, voices, mapLabel, title, description }) => ({
       slug,
       name,
       subcopy,
@@ -117,7 +125,7 @@ async function main(): Promise<void> {
   const shopsDirectory = path.join(projectRoot, "src", "data", "shops");
   const outputPath = path.join(shopsDirectory, `${inputs.slug}.json`);
 
-  if (shops.some((shop) => shop.slug === inputs.slug) || existsSync(outputPath)) {
+  if (getShops().some((shop) => shop.slug === inputs.slug) || existsSync(outputPath)) {
     throw new Error(`slug「${inputs.slug}」の店舗データはすでに存在します。既存データは上書きしません。`);
   }
 
@@ -136,7 +144,8 @@ async function main(): Promise<void> {
       "あなたは美容室の店舗LPを作成する編集者です。指示された店舗固有データだけをJSONで出力してください。",
       "最上位キーは subcopy, introduction, accessDescription, address, staff, voices, mapLabel, title, description のみです。",
       "staffは店長1名とスタイリスト1名の2件、voicesは年代・職業・来店前の悩み・来店後に感じた変化を持つ3件です。すべて架空のデモ設定です。",
-      "addressは具体的な架空住所にし、末尾に必ず半角括弧の (デモ用の架空住所) を付けてください。",
+      "addressは具体的な架空住所だけを作成し、デモ用注記や括弧書きは付けないでください。",
+      "住所は丁目までとし、番地・号は書かないでください。",
       "mapLabelは『店舗名周辺の地図（仮）』の形式にしてください。",
       "美容広告で効果を断定しないでください。必ず、絶対、治る、完治、100%、永久という語句は出力に含めないでください。",
       "出力はJSONオブジェクトのみとし、Markdownコードフェンスや前後の説明は付けないでください。",
@@ -185,8 +194,13 @@ async function main(): Promise<void> {
     throw new Error(`Claude APIの出力形式が不正です:\n${generatedResult.error.message}`);
   }
 
+  if (/\d+\s*-\s*\d+/.test(generatedResult.data.address)) {
+    throw new Error(`住所に番地が含まれています。丁目までの住所に修正してください: ${generatedResult.data.address}`);
+  }
+
   const shopResult = ShopSchema.safeParse({
     ...generatedResult.data,
+    address: addDemoAddressNote(generatedResult.data.address),
     slug: inputs.slug,
     name: inputs.name,
     hours: inputs.hours,

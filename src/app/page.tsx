@@ -1,7 +1,9 @@
 import Link from "next/link";
-import { shops } from "@/data/shops";
+import { getShops } from "@/data/shops";
 
 export default function Home() {
+  const shops = getShops();
+
   return (
     <div className="min-h-svh bg-[#f8f6f0] font-sans text-[#30372f]">
       <header className="mx-auto flex h-[76px] max-w-[1440px] items-center px-6 sm:px-10 lg:h-[92px] lg:px-16">
