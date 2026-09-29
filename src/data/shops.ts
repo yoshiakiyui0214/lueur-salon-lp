@@ -76,7 +76,7 @@ export const shops: Shop[] = [
         change: "落ち着いた空間でゆっくり過ごせました。髪のツヤを感じられて、気分も明るくなりました。",
       },
     ],
-    mapLabel: "地図の仮スペース",
+    mapLabel: "渋谷店周辺の地図（仮）",
     title: "Lueur 渋谷店 | 毎日の髪に、ほのかな光を。",
     description: "渋谷駅から徒歩3分。仕事帰りの21時まで営業する美容室 Lueur 渋谷店。",
     reservationHref: "mailto:reserve@lueur.example?subject=Lueur%20%E6%B8%8B%E8%B0%B7%E5%BA%97%E3%81%AE%E4%BA%88%E7%B4%84",

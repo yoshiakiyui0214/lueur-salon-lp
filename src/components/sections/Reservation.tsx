@@ -12,13 +12,13 @@ export default function Reservation({ shop }: { shop: Shop }) {
           titleId="reservation-title"
           className="text-left"
         />
-        <div className="text-center">
+        <div className="text-left">
           <a
             href={shop.reservationHref}
-            className="inline-flex min-h-14 w-full max-w-[340px] items-center justify-between bg-[#8B6F55] px-6 text-left text-[14px] tracking-[0.06em] text-white transition-colors hover:bg-[#725941] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#8B6F55]"
+            className="inline-flex min-h-12 min-w-48 items-center justify-center gap-5 bg-[#8B6F55] px-6 text-[13px] tracking-[0.06em] text-white transition-colors hover:bg-[#725941] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#8B6F55]"
           >
             <span>この店舗で予約する</span>
-            <span aria-hidden="true" className="text-lg">↗</span>
+            <span aria-hidden="true" className="text-base">↗</span>
           </a>
         </div>
       </div>

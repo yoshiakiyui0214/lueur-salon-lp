@@ -9,7 +9,7 @@ export default function Home() {
         <span className="mt-1 ml-3 border-l border-[#c9c7b8] pl-3 text-[10px] tracking-[0.18em] text-[#77786b]">リュウール</span>
       </header>
       <main className="mx-auto max-w-6xl px-6 pb-20 pt-10 sm:px-10 lg:px-16 lg:pt-16">
-        <p className="mb-4 text-[12px] font-medium tracking-[0.12em] text-[#8B6F55]">LUEUR SALON</p>
+        <p className="mb-4 text-[12px] font-medium tracking-[0.12em] text-[#8B6F55]">髪質改善サロン Lueur</p>
         <h1 className="font-serif text-[30px] font-normal leading-[1.5] text-[#394338] sm:text-[38px]">店舗をお選びください</h1>
         <p className="mt-3 text-[14px] leading-7 text-[#686b60]">毎日の髪に、ほのかな光を。</p>
         <ul className="mt-10 border-t border-[#cfc6b5]">
