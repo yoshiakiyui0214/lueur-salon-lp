@@ -20,6 +20,16 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Add a shop
+
+Set `ANTHROPIC_API_KEY` in `.env.local`, then run the generator with the shop's basic information:
+
+```bash
+npm run add-shop -- --slug omotesando --name 表参道店 --station 表参道駅 --walk 2 --hours "11:00〜20:00" --closed 火曜日 --angle "買い物帰りに寄れる"
+```
+
+The generated JSON is added under `src/data/shops/`. Review its content before committing; the generator never commits changes.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
