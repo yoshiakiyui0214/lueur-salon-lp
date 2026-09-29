@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Lueur 渋谷店 | 毎日の髪に、ほのかな光を。",
-  description: "渋谷駅から徒歩3分。仕事帰りの21時まで営業する美容室 Lueur 渋谷店。",
+  title: "Lueur | 毎日の髪に、ほのかな光を。",
+  description: "髪質改善トリートメントで、毎日の髪にほのかな光を。Lueur の店舗一覧。",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

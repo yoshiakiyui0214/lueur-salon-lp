@@ -1,6 +1,7 @@
 import { SectionHeading } from "./SectionParts";
+import type { Shop } from "@/data/shops";
 
-export default function Reservation() {
+export default function Reservation({ shop }: { shop: Shop }) {
   return (
     <section id="reservation" aria-labelledby="reservation-title" className="bg-[#e9e3d7] px-6 py-16 text-center sm:px-10 sm:py-20 lg:px-16">
       <div className="mx-auto max-w-6xl">
@@ -13,7 +14,7 @@ export default function Reservation() {
         />
         <div className="text-center">
           <a
-            href="mailto:reserve@lueur.example?subject=Lueur%20%E6%B8%8B%E8%B0%B7%E5%BA%97%E3%81%AE%E4%BA%88%E7%B4%84"
+            href={shop.reservationHref}
             className="inline-flex min-h-14 w-full max-w-[340px] items-center justify-between bg-[#8B6F55] px-6 text-left text-[14px] tracking-[0.06em] text-white transition-colors hover:bg-[#725941] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#8B6F55]"
           >
             <span>この店舗で予約する</span>

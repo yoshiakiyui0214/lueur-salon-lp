@@ -1,34 +1,18 @@
 import { SectionHeading } from "./SectionParts";
+import type { Shop } from "@/data/shops";
 
-const staff = [
-  {
-    name: "佐倉 美月",
-    role: "店長",
-    career: "美容師歴 12年",
-    specialty: "髪質に合わせたケアと、やわらかな質感づくり",
-    message: "日々のお手入れが少し楽になるように、髪の状態やライフスタイルに合わせてご提案します。",
-  },
-  {
-    name: "高瀬 里奈",
-    role: "スタイリスト",
-    career: "美容師歴 7年",
-    specialty: "カラーを楽しみながら続けるヘアケア",
-    message: "小さなことも気軽に相談できる時間を大切にしています。なりたい髪を一緒に探していきましょう。",
-  },
-];
-
-export default function Staff() {
+export default function Staff({ shop }: { shop: Shop }) {
   return (
     <section aria-labelledby="staff-title" className="bg-[#f1eee5] px-6 py-16 sm:px-10 sm:py-20 lg:px-16">
       <div className="mx-auto max-w-6xl">
         <SectionHeading
           eyebrow="06 スタッフ紹介"
-          title="渋谷店のスタイリスト"
+          title={`${shop.name}のスタイリスト`}
           description="カウンセリングから仕上げまで、一人ひとりに向き合います。"
           titleId="staff-title"
         />
         <ul className="grid gap-10 sm:grid-cols-2 sm:gap-8 lg:gap-12">
-          {staff.map((person) => (
+          {shop.staff.map((person) => (
             <li key={person.name} className="grid grid-cols-[minmax(96px,0.7fr)_1.3fr] items-start gap-5 sm:grid-cols-1 sm:gap-6 md:grid-cols-[0.8fr_1.2fr]">
               <div
                 role="img"
