@@ -1,46 +1,130 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Lueur 店舗LPテンプレート ― AIで「デザイン → テンプレート化 → 店舗別ページの横展開」までを行うデモ
 
-## Getting Started
+> ※ Lueur(リュウール)は、このデモのために作った**架空の美容室**です。店舗・スタッフ・住所・お客様の声などはすべて架空の内容です。
 
-First, run the development server:
+- **公開URL**:https://lueur-salon-lp.vercel.app
+- **店舗ページ**:[渋谷店](https://lueur-salon-lp.vercel.app/shibuya)/[吉祥寺店](https://lueur-salon-lp.vercel.app/kichijoji)/[横浜店](https://lueur-salon-lp.vercel.app/yokohama)/[表参道店(AIで追加)](https://lueur-salon-lp.vercel.app/omotesando)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## このデモで検証したこと
+
+「LPの目的・ターゲット・構成を決めれば、AIで一定品質以上のデザインを作り、テンプレートから地域別・サービス別のページまで効率よく展開できるか」を、実際に作って確かめました。
+
+**AIに7〜9割を任せ、人間は「判断・調整・品質確認」に集中する**体制を目指しています。
+
+## 制作フローと、AI・人間の分担
+
+| # | 工程 | 担当 | このデモでやったこと |
+|---|---|---|---|
+| 1 | ターゲット・構成・内容を決める | **人間** | `docs/brief.md` に設計書をまとめる(ペルソナ、LPの10セクション、共通/店舗別の切り分け、表現ルール) |
+| 2 | LPデザインを作る | **AI** | 設計書を渡して、ファーストビュー → 残りのセクションの順に生成 |
+| 3 | デザインを調整する | **人間** | デザイナーとして確認し、修正点を指示(下の「AIの初版から直したこと」) |
+| 4 | テンプレート化 | **AI**(人間が指示) | 共通の部品と、店舗ごとのデータに分ける |
+| 5 | 店舗別ページを作る | **AI** | 店舗の基本情報を入れるだけで、Claude APIが紹介文などを作成(`npm run add-shop`) |
+| 6 | 公開前チェック | **仕組み+人間** | 自動チェック(形式・禁止表現・住所)のあと、人間が内容を確認してから公開 |
+
+AIの初版は、直す前に一度コミットしています。GitHubの履歴で「AIが作ったもの」と「人間が直したもの」を見比べられます。
+
+## AIの初版から直したこと(デザイナーによる調整)
+
+AIのデザインは方向性(配色・フォント・余白)は良かった一方、**訴求の優先順位・読みやすさ・細部の整合性**は人間の判断が必要でした。
+
+### ファーストビュー
+
+| 気になった点 | 直したこと |
+|---|---|
+| 一番の強み「髪質改善」が小さく、目立たない | キャッチの上に「髪質改善トリートメント|渋谷店」を読みやすい大きさで配置し、重複表示を削除 |
+| キャッチ末尾の「*」が注意書きの印に見える | 削除 |
+| 英語の小さな文字が多く、読みにくい | 減らし、店舗名・営業時間は日本語に |
+| 写真枠の中のロゴが、左上のロゴと重なって見える | 削除し、写真の仮枠だけに |
+| ボタンがくすんだ緑で、ブランドの「木の質感」と合わない | 木の色に近いブラウン(#8B6F55)に変更 |
+| キャッチが「ほのかな光/を。」と泣き別れ | 「毎日の髪に、/ほのかな光を。」の2行で必ず改行 |
+
+### お悩み〜予約のセクション
+
+| 気になった点 | 直したこと |
+|---|---|
+| 予約ボタンが8か所あり、しつこい印象 | 強み・メニュー・店舗情報の後と、最後の予約だけ(4か所)に |
+| 最後のボタンだけ文言が違う | 「この店舗で予約する」にそろえる |
+| メニューの見出しが「わかりやすい、税込表示」 | 「メニュー・料金」に |
+| 施術の流れが単語だけで、初めての人の不安が消えない | 各ステップに1行ずつ説明を追加 |
+| 一番の売り「3つのこだわり」が文字だけ | 写真の仮枠を追加 |
+| セクションごとに左端の位置がばらばら | 全セクションの左端をそろえ、軸を1本に |
+
+※ 予約ボタンが多すぎたのは、最初の設計書に「各セクションの後にも予約ボタン」と書いていたためです。**設計の段階での人間の判断ミスは、AIもそのまま作ってしまう**ため、設計書も合わせて修正しました。
+
+## テンプレートの仕組み
+
+```
+src/data/shops/<店舗>.json   店舗ごとのデータ(店舗名・サブコピー・営業時間・住所・スタッフ・お客様の声など)
+        ↓
+src/components/sections/     共通の部品(ファーストビュー、お悩み、こだわり、メニュー、施術の流れ、FAQ …)
+        ↓
+src/app/[shop]/page.tsx      店舗ごとのページを自動で生成(タイトル・説明文も店舗ごと)
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **店舗を増やす**:JSONを1つ追加するだけで、ページと店舗一覧が増える
+- **デザインを直す**:部品を1か所直すと、全店舗のページに一括で反映される
+- **存在しない店舗のURL**:デザインをそろえた404ページを表示
+- 店舗データは型(zod)でチェックし、項目の抜けや形の違いがあればエラーにする
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## AIで新しい店舗ページを追加する
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 準備
 
-## Add a shop
+`.env.local` に Claude API のキーを設定します(GitHubには上げません)。
 
-Set `ANTHROPIC_API_KEY` in `.env.local`, then run the generator with the shop's basic information:
+```
+ANTHROPIC_API_KEY=sk-ant-...
+```
+
+※ キーのスコープは「ワークスペース」を選んでください。「組織」スコープのキーでは、リクエストごとにワークスペースの指定が必要になり、400エラーになります。
+
+### 実行
+
+入力するのは、店舗の**基本情報だけ**です。
 
 ```bash
 npm run add-shop -- --slug omotesando --name 表参道店 --station 表参道駅 --walk 2 --hours "11:00〜20:00" --closed 火曜日 --angle "買い物帰りに寄れる"
 ```
 
-The generated JSON is added under `src/data/shops/`. Review its content before committing; the generator never commits changes.
+Claude APIが、設計書(ブランド・ターゲット・表現ルール)と既存店舗のデータを参考に、サブコピー・店舗紹介文・アクセス・スタッフ2名・お客様の声3件・ページのタイトルと説明文を作り、`src/data/shops/omotesando.json` に保存します。
 
-## Learn More
+### 自動チェック(保存前)
 
-To learn more about Next.js, take a look at the following resources:
+| チェック | 内容 |
+|---|---|
+| 形式 | AIの出力を型でチェックし、項目の抜けや形の違いがあれば保存しない |
+| 表現 | 「必ず」「絶対」「治る」「完治」「100%」「永久」などの言い切り表現があれば、場所を表示して保存しない |
+| 住所 | 番地まで入っていたら保存しない(実在の建物と重ならないよう、架空住所は丁目までにする) |
+| 重複 | 同じ店舗(slug)がすでにあれば上書きしない |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+「(デモ用の架空住所)」のような**毎回同じでよい文言は、AIに任せずプログラムで付けています**。AIは書き方が少しずつ揺れるため、決まった文言を任せるとチェックで止まることがあったためです。
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 人間の確認(公開前)
 
-## Deploy on Vercel
+保存後はコミットせず、人間がページを確認してから公開します。表参道店では、AIが住所を「南青山3丁目12-8」と番地まで書いていたのを人間の確認で見つけ、手で直したうえで、**同じことが起きないようにプロンプトと自動チェックにルールを追加**しました。
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 使った技術・ツール
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| 分類 | 内容 |
+|---|---|
+| フレームワーク | Next.js(App Router)、TypeScript |
+| デザイン | Tailwind CSS |
+| データのチェック | zod |
+| AI(ページ生成) | Claude API(`@anthropic-ai/sdk`) |
+| AI(コーディング) | 【GitHub Copilot(VS Code のエージェントモード)】 |
+| 公開 | Vercel(GitHubにpushすると自動で公開) |
+
+## 開発者向け
+
+```bash
+npm install
+npm run dev        # http://localhost:3000
+npm run lint
+npm run build
+npm run add-shop -- (上の実行例を参照)
+```
+
+## 制作期間
+
+2026年9月28日〜9月29日(約2日)
